@@ -111,7 +111,12 @@ const cors = require('cors')
 const app = express();
 
 app.use(cors())
+const PORT = process.env.PORT || 3000
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log('CORS-enabled web server listening on port 80')
+app.get('/api', function(req, res) {
+  res.send("<h1>nice</h1>")
+});
+
+app.listen(PORT, function () {
+  console.log(PORT)
 })
