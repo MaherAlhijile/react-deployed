@@ -1,9 +1,9 @@
-// const express = require("express");
-// const cors = require('cors')
+const express = require("express");
+const cors = require("cors");
+const app = express();
+app.use(cors());
+const PORT = process.env.PORT || 3000;
 
-// const app = express();
-
-// app.use(cors())
 
 let persons = [
   {
@@ -28,91 +28,75 @@ let persons = [
   },
 ];
 
-// app.get("/api/persons", (request, response) => {
-//   response.json(persons);
-// });
+const generateId = () => {
+  const maxId = persons.length > 0
+    ? Math.max(...persons.map(n => n.id))
+    : 0
+  return maxId + 1
+}
 
-// app.get("/api/info", (request, response) => {
-//   const time = Date();
-//   response.send(`There is ${persons.length} persons in the book <br/>${time}`);
-// });
-
-// app.get("/api/persons/:id", (request, response) => {
-//   const id = Number(request.params.id);
-//   const person = persons.find((person) => person.id === id);
-
-//   if (person) {
-//     response.json(person);
-//   } else {
-//     response.statusMessage = "idiot";
-//     response.status(404).end();
-//   }
-// });
-
-// app.delete("/api/persons/:id", (request, response) => {
-//   const id = Number(request.params.id);
-//   persons = persons.filter((person) => person.id !== id);
-//   response.status(204).end();
-// });
-
-// const generateId = () => {
-//     const maxId = persons.length > 0
-//       ? Math.max(...persons.map(n => n.id))
-//       : 0
-//     return maxId + 1
-//   }
-
-// app.post("/api/persons/:id", (request, response) => {
-
-//   const body = request.body
-
-//   if (!body.name) {
-//     return response.status(400).json({
-//       error: 'name missing'
-//     })
-//   }
-
-//   if (!body.number) {
-//     return response.status(400).json({
-//       error: 'number missing'
-//     })
-//   }
-
-//   if((persons.filter(person => person.number === body.number).length)){
-//     return response.status(400).json({
-//         error: 'number dublicate'
-//       })
-//   }
-
-//   const person = {
-//     name: body.name,
-//     number: body.number,
-//     id: generateId(),
-//   }
-
-//   persons= persons.concat(person)
-//   response.json(person)
-// });
-
-// const PORT = process.env.PORT || 3000
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`)
-// })
-
-const express = require("express");
-const cors = require("cors");
-const app = express();
-
-app.use(cors());
-const PORT = process.env.PORT || 3000;
 
 app.get("/", function (req, res) {
-  res.send("<h1>nice</h1>");
+  const time = Date();
+  res.send(`There is ${persons.length} persons in the book <br/>${time}`);
 });
 
 app.get("/api/persons", function (req, res) {
   res.json(persons);
 });
+
+app.get("/api/persons/:id", function (req, res) {
+  const id = Number(req.params.id);
+  const person = persons.find((person) => person.id === id);
+
+  if (person) {
+    res.json(person);
+  } else {
+    res.statusMessage = "idiot";
+    res.status(404).end();
+  }
+});
+
+app.post("/api/persons/:id", function (req, res) {
+
+  const body = req.body
+
+  if (!body.name) {
+    return res.status(400).json({
+      error: 'name missing'
+    })
+  }
+
+  if (!body.number) {
+    return res.status(400).json({
+      error: 'number missing'
+    })
+  }
+
+  if((persons.filter(person => person.number === body.number).length)){
+    return res.status(400).json({
+        error: 'number dublicate'
+      })
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  }
+
+  persons= persons.concat(person)
+  res.json(person)
+});
+
+app.delete("/api/persons/:id", function (req, res)  {
+  const id = Number(req.params.id);
+  persons = persons.filter((person) => person.id !== id);
+  res.status(204).end();
+});
+
+
+
 
 app.listen(PORT, function () {
   console.log(PORT);
