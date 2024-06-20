@@ -105,13 +105,16 @@
 //   console.log(`Server running on port ${PORT}`)
 // })
 
-const http = require("http")
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, {"Content-Type": "text/plain"});
-  res.end("hellow");
-});
+const express = require("express");
+const cors = require('cors')
 
-const PORT = process.env.PORT || 3000;
+const app = express();
 
-server.listen(PORT, () => console.log("server is down"));
+ app.use(cors())
+
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+console.log(`Server running on port ${PORT}`)
+})
