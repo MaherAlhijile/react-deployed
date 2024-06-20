@@ -113,7 +113,7 @@ const app = express();
 app.use(cors())
 const PORT = process.env.PORT || 3000
 
-app.get('/api', function(req, res) {
+app.get('/', function(req, res) {
   res.send("<h1>nice</h1>")
 });
 
