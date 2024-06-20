@@ -5,28 +5,28 @@
 
 // app.use(cors())
 
-// let persons = [
-//   {
-//     id: 1,
-//     name: "Arto Hellas",
-//     number: "040-123456",
-//   },
-//   {
-//     id: 2,
-//     name: "Ada Lovelace",
-//     number: "39-44-5323523",
-//   },
-//   {
-//     id: 3,
-//     name: "Dan Abramov",
-//     number: "12-43-234345",
-//   },
-//   {
-//     id: 4,
-//     name: "Mary Poppendieck",
-//     number: "39-23-6423122",
-//   },
-// ];
+let persons = [
+  {
+    id: 1,
+    name: "Arto Hellas",
+    number: "040-123456",
+  },
+  {
+    id: 2,
+    name: "Ada Lovelace",
+    number: "39-44-5323523",
+  },
+  {
+    id: 3,
+    name: "Dan Abramov",
+    number: "12-43-234345",
+  },
+  {
+    id: 4,
+    name: "Mary Poppendieck",
+    number: "39-23-6423122",
+  },
+];
 
 // app.get("/api/persons", (request, response) => {
 //   response.json(persons);
@@ -55,7 +55,6 @@
 //   response.status(204).end();
 // });
 
-
 // const generateId = () => {
 //     const maxId = persons.length > 0
 //       ? Math.max(...persons.map(n => n.id))
@@ -63,33 +62,28 @@
 //     return maxId + 1
 //   }
 
-  
 // app.post("/api/persons/:id", (request, response) => {
-
 
 //   const body = request.body
 
 //   if (!body.name) {
-//     return response.status(400).json({ 
-//       error: 'name missing' 
+//     return response.status(400).json({
+//       error: 'name missing'
 //     })
 //   }
 
 //   if (!body.number) {
-//     return response.status(400).json({ 
-//       error: 'number missing' 
+//     return response.status(400).json({
+//       error: 'number missing'
 //     })
 //   }
 
-
 //   if((persons.filter(person => person.number === body.number).length)){
-//     return response.status(400).json({ 
-//         error: 'number dublicate' 
+//     return response.status(400).json({
+//         error: 'number dublicate'
 //       })
 //   }
 
-
-  
 //   const person = {
 //     name: body.name,
 //     number: body.number,
@@ -105,18 +99,21 @@
 //   console.log(`Server running on port ${PORT}`)
 // })
 
-
 const express = require("express");
-const cors = require('cors')
+const cors = require("cors");
 const app = express();
 
-app.use(cors())
-const PORT = process.env.PORT || 3000
+app.use(cors());
+const PORT = process.env.PORT || 3000;
 
-app.get('/', function(req, res) {
-  res.send("<h1>nice</h1>")
+app.get("/", function (req, res) {
+  res.send("<h1>nice</h1>");
+});
+
+app.get("/api/persons", function (req, res) {
+  res.json(persons);
 });
 
 app.listen(PORT, function () {
-  console.log(PORT)
-})
+  console.log(PORT);
+});
